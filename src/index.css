@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-dark: #0C0D10;
+    --panel-dark: #13151D;
+    --panel-border: rgba(215, 168, 75, 0.2);
+    --armor-red: #A61C24;
+    --armor-red-bright: #E62429;
+    --metallic-gold: #D7A84B;
+    --gold-glow: #F5C542;
+    --cyan-hud: #61DDF2;
+    --cyan-glow: #00F0FF;
+    --text-warm: #F2F0EA;
+    --text-muted: #9BA1B0;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-warm);
+  }
+
+  h1, h2, h3, h4, .font-tech {
+    font-family: 'Chakra Petch', sans-serif;
+  }
+
+  code, pre, .font-mono-tech {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Custom Iron Man Tech & HUD Utility Classes */
+.bg-hud-grid {
+  background-size: 36px 36px;
+  background-image: 
+    linear-gradient(to right, rgba(97, 221, 242, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(97, 221, 242, 0.04) 1px, transparent 1px);
+}
+
+.bg-radial-arc {
+  background: radial-gradient(circle at 50% 30%, rgba(97, 221, 242, 0.12) 0%, rgba(166, 28, 36, 0.08) 45%, rgba(12, 13, 16, 0.95) 80%);
+}
+
+.border-hud-red {
+  border-color: rgba(166, 28, 36, 0.4);
+}
+
+.border-hud-gold {
+  border-color: rgba(215, 168, 75, 0.4);
+}
+
+.border-hud-cyan {
+  border-color: rgba(97, 221, 242, 0.4);
+}
+
+.glow-red {
+  box-shadow: 0 0 20px rgba(166, 28, 36, 0.35);
+}
+
+.glow-gold {
+  box-shadow: 0 0 20px rgba(215, 168, 75, 0.35);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(97, 221, 242, 0.35);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 10px rgba(97, 221, 242, 0.6);
+}
+
+.text-glow-gold {
+  text-shadow: 0 0 10px rgba(215, 168, 75, 0.5);
+}
+
+.text-glow-red {
+  text-shadow: 0 0 10px rgba(230, 36, 41, 0.6);
+}
+
+/* Corner HUD accents for engineering panels */
+.hud-corner-box {
+  position: relative;
+}
+
+.hud-corner-box::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #D7A84B;
+  border-left: 2px solid #D7A84B;
+  pointer-events: none;
+}
+
+.hud-corner-box::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid #A61C24;
+  border-right: 2px solid #A61C24;
+  pointer-events: none;
+}
+
+/* Scanline Animation */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+.animate-scanline {
+  animation: scanline 8s linear infinite;
+}
+
+/* Arc Reactor Pulse */
+@keyframes arcPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+    filter: drop-shadow(0 0 12px rgba(97, 221, 242, 0.7));
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 24px rgba(97, 221, 242, 0.95));
+  }
+}
+
+.animate-arc-pulse {
+  animation: arcPulse 3.5s ease-in-out infinite;
+}
+
+@keyframes rotateSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-rotate-slow {
+  animation: rotateSlow 24s linear infinite;
+}
+
+@keyframes rotateReverseSlow {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-rotate-reverse {
+  animation: rotateReverseSlow 18s linear infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0C0D10;
+}
+::-webkit-scrollbar-thumb {
+  background: #232736;
+  border-radius: 4px;
+  border: 1px solid rgba(215, 168, 75, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A61C24;
+}
