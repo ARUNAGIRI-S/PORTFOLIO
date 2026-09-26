@@ -1,17 +1,22 @@
 import { MongoClient, Db } from 'mongodb';
 import * as dotenv from 'dotenv';
 import path from 'path';
-import dns from 'dns';
-
-// Force DNS resolution via Google & Cloudflare DNS to bypass local router/ISP SRV blocks on Windows
-try {
-  dns.setServers(['8.8.8.8', '1.1.1.1', '8.8.4.4']);
-} catch {
-  // Ignore in environment where setServers isn't supported
-}
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 dotenv.config();
+
+// Safely configure DNS servers for local Windows development without breaking Vercel Linux Lambdas
+if (process.env.NODE_ENV !== 'production' && process.platform === 'win32') {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const dns = require('dns');
+    if (dns && typeof dns.setServers === 'function') {
+      dns.setServers(['8.8.8.8', '1.1.1.1', '8.8.4.4']);
+    }
+  } catch {
+    // ignore if unsupported
+  }
+}
 
 interface MongoConnection {
   client: MongoClient;
@@ -32,8 +37,8 @@ export async function connectToDatabase(): Promise<MongoConnection> {
   }
 
   const client = new MongoClient(uri, {
-    connectTimeoutMS: 15000,
-    serverSelectionTimeoutMS: 15000,
+    connectTimeoutMS: 10000,
+    serverSelectionTimeoutMS: 10000,
   });
 
   await client.connect();

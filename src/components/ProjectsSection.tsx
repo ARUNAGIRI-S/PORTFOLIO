@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Cpu, HeartPulse, Bus, Home, Globe, CheckCircle2, Loader2, RefreshCw } from 'lucide-react';
+import { ExternalLink, Cpu, HeartPulse, Bus, Home, Globe, CheckCircle2, Loader2, RefreshCw, ShoppingCart, MessageSquareText, CheckSquare, Layout } from 'lucide-react';
 import { ModalLinkPlaceholder } from './ModalLinkPlaceholder';
 import { GithubIcon } from './SocialIcons';
 import { INITIAL_PROJECTS, type ProjectItem } from '../../api/_data';
 
-const getIconForCategory = (category: string) => {
+const getIconForCategory = (category: string, slug?: string) => {
+  if (slug === 'ecommerce-app') return ShoppingCart;
+  if (slug === 'blog-platform') return MessageSquareText;
+  if (slug === 'task-manager') return CheckSquare;
+  if (slug === 'personal-portfolio') return Layout;
   if (category.includes('Healthcare') || category.includes('AIoT')) return HeartPulse;
   if (category.includes('Mobility') || category.includes('Transport')) return Bus;
   if (category.includes('Automation') || category.includes('Home')) return Home;
@@ -26,6 +30,22 @@ export const ProjectsSection: React.FC = () => {
 
   const openPlaceholder = (title: string, type: 'live' | 'repo') => {
     setActiveModal({ isOpen: true, title, type });
+  };
+
+  const handleLiveClick = (project: ProjectItem) => {
+    if (project.liveDemo) {
+      window.open(project.liveDemo, '_blank', 'noopener,noreferrer');
+    } else {
+      openPlaceholder(project.title, 'live');
+    }
+  };
+
+  const handleRepoClick = (project: ProjectItem) => {
+    if (project.github) {
+      window.open(project.github, '_blank', 'noopener,noreferrer');
+    } else {
+      openPlaceholder(project.title, 'repo');
+    }
   };
 
   const fetchProjects = async () => {
@@ -68,7 +88,7 @@ export const ProjectsSection: React.FC = () => {
           </h2>
 
           <p className="text-sm sm:text-base text-[#9BA1B0] font-sans">
-            Engineered hardware-software solutions combining microcontroller sensor networks, Flutter mobile interfaces, cloud alert pipelines, and full-stack web platforms.
+            Engineered hardware-software solutions combining microcontroller sensor networks, Flutter mobile interfaces, cloud alert pipelines, and deployed web application platforms.
           </p>
 
           <div className="flex items-center justify-center space-x-3 text-xs font-mono-tech pt-1">
@@ -100,7 +120,7 @@ export const ProjectsSection: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {projects.map((project, index) => {
-            const Icon = getIconForCategory(project.category);
+            const Icon = getIconForCategory(project.category, project.slug);
             const borderStyle = project.borderStyle || 'border-[#A61C24]/60 hover:border-[#E62429]';
             const glowColor = project.glowColor || 'shadow-[0_0_25px_rgba(166,28,36,0.25)]';
 
@@ -110,7 +130,7 @@ export const ProjectsSection: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 className={`relative flex flex-col justify-between rounded-xl bg-[#13151D] border ${borderStyle} ${glowColor} p-6 sm:p-8 transition-all duration-300 hud-corner-box group`}
               >
                 <div>
@@ -173,19 +193,19 @@ export const ProjectsSection: React.FC = () => {
 
                   <div className="flex items-center justify-between pt-2">
                     <button
-                      onClick={() => openPlaceholder(project.title, 'live')}
-                      className="inline-flex items-center space-x-1.5 text-xs font-tech font-bold text-[#9BA1B0] hover:text-[#61DDF2] px-3 py-1.5 rounded bg-[#0C0D10] border border-white/10 hover:border-[#61DDF2] transition-colors focus:outline-none focus:ring-1 focus:ring-[#61DDF2]"
+                      onClick={() => handleLiveClick(project)}
+                      className="inline-flex items-center space-x-1.5 text-xs font-tech font-bold text-[#F2F0EA] hover:text-[#61DDF2] px-3.5 py-2 rounded bg-[#0C0D10] border border-white/15 hover:border-[#61DDF2] transition-colors focus:outline-none focus:ring-1 focus:ring-[#61DDF2]"
                     >
                       <ExternalLink className="w-3.5 h-3.5 text-[#61DDF2]" />
-                      <span>{project.liveDemo ? 'Live Application' : 'Live link (Add link)'}</span>
+                      <span>{project.liveDemo ? 'Launch Web App' : 'Live Demo Link'}</span>
                     </button>
 
                     <button
-                      onClick={() => openPlaceholder(project.title, 'repo')}
-                      className="inline-flex items-center space-x-1.5 text-xs font-tech font-bold text-[#9BA1B0] hover:text-[#D7A84B] px-3 py-1.5 rounded bg-[#0C0D10] border border-white/10 hover:border-[#D7A84B] transition-colors focus:outline-none focus:ring-1 focus:ring-[#D7A84B]"
+                      onClick={() => handleRepoClick(project)}
+                      className="inline-flex items-center space-x-1.5 text-xs font-tech font-bold text-[#F2F0EA] hover:text-[#D7A84B] px-3.5 py-2 rounded bg-[#0C0D10] border border-white/15 hover:border-[#D7A84B] transition-colors focus:outline-none focus:ring-1 focus:ring-[#D7A84B]"
                     >
                       <GithubIcon className="w-3.5 h-3.5 text-[#D7A84B]" />
-                      <span>{project.github ? 'GitHub Repository' : 'Repository (Add link)'}</span>
+                      <span>{project.github ? 'View Code Repository' : 'Repository Link'}</span>
                     </button>
                   </div>
 
