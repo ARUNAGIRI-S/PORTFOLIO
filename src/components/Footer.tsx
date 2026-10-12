@@ -57,7 +57,7 @@ export const Footer: React.FC = () => {
               aria-label="Back to top"
             >
               <span>BACK TO TOP</span>
-              <ChevronUp className="w-4 h-4 text-[#A61C24] group-hover:-translate-y-1 transition-transform" />
+              <ChevronUp className="w-4 h-4 text-[#FF4545] group-hover:-translate-y-1 transition-transform" />
             </button>
 
           </div>

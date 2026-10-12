@@ -10,7 +10,9 @@ export interface ProjectItem {
   borderStyle?: string;
   glowColor?: string;
   github?: string;
+  githubLabel?: string;
   liveDemo?: string;
+  liveLabel?: string;
   featured: boolean;
   createdAt?: string;
   updatedAt?: string;
@@ -56,8 +58,10 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     badge: 'Deployed on Vercel',
     borderStyle: 'border-[#61DDF2]/60 hover:border-[#00F0FF]',
     glowColor: 'shadow-[0_0_25px_rgba(97,221,242,0.25)]',
-    liveDemo: 'https://e-commers-webapp-axjfdgxb1-arun26.vercel.app/index.html',
+    liveDemo: 'https://e-commers-webapp.vercel.app/',
+    liveLabel: 'Launch Web App',
     github: 'https://github.com/ARUNAGIRI-S/E-Commers-webapp',
+    githubLabel: 'View Code Repository',
     featured: true,
   },
   {
@@ -76,7 +80,9 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     borderStyle: 'border-[#D7A84B]/60 hover:border-[#F5C542]',
     glowColor: 'shadow-[0_0_25px_rgba(215,168,75,0.25)]',
     liveDemo: 'https://blog-platform-with-comments-theta.vercel.app/',
+    liveLabel: 'Launch Web App',
     github: 'https://github.com/ARUNAGIRI-S/Blog-Platform-with-comments',
+    githubLabel: 'View Code Repository',
     featured: true,
   },
   {
@@ -95,7 +101,9 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     borderStyle: 'border-[#61DDF2]/60 hover:border-[#00F0FF]',
     glowColor: 'shadow-[0_0_25px_rgba(97,221,242,0.25)]',
     liveDemo: 'https://task-mnnager-app.vercel.app/',
+    liveLabel: 'Launch Web App',
     github: 'https://github.com/ARUNAGIRI-S/Task-Mannager-Webapp',
+    githubLabel: 'View Code Repository',
     featured: true,
   },
   {
@@ -114,7 +122,9 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     borderStyle: 'border-[#A61C24]/60 hover:border-[#E62429]',
     glowColor: 'shadow-[0_0_25px_rgba(166,28,36,0.25)]',
     liveDemo: 'https://personal-portfolio-web-jade.vercel.app/',
+    liveLabel: 'Launch Web App',
     github: 'https://github.com/ARUNAGIRI-S/PORTFOLIO',
+    githubLabel: 'View Code Repository',
     featured: true,
   },
   {
@@ -132,7 +142,9 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     badge: 'IEEE Paper in Preparation',
     borderStyle: 'border-[#A61C24]/60 hover:border-[#E62429]',
     glowColor: 'shadow-[0_0_25px_rgba(166,28,36,0.25)]',
+    liveLabel: 'View System Specs',
     github: 'https://github.com/ARUNAGIRI-S',
+    githubLabel: 'GitHub Profile',
     featured: false,
   },
   {
@@ -150,7 +162,9 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     badge: 'SIH 2025 Internal Selection',
     borderStyle: 'border-[#D7A84B]/60 hover:border-[#F5C542]',
     glowColor: 'shadow-[0_0_25px_rgba(215,168,75,0.25)]',
+    liveLabel: 'View Project Specs',
     github: 'https://github.com/ARUNAGIRI-S',
+    githubLabel: 'GitHub Profile',
     featured: false,
   },
   {
@@ -168,7 +182,9 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     badge: '1st Prize & ₹1,500 Cash Award',
     borderStyle: 'border-[#61DDF2]/60 hover:border-[#00F0FF]',
     glowColor: 'shadow-[0_0_25px_rgba(97,221,242,0.25)]',
+    liveLabel: 'View Circuit Specs',
     github: 'https://github.com/ARUNAGIRI-S',
+    githubLabel: 'GitHub Profile',
     featured: false,
   },
 ];
@@ -245,51 +261,51 @@ export const INITIAL_CERTIFICATES: CertificateItem[] = [
   {
     title: 'AI Fluency for Small Businesses',
     issuer: 'Anthropic & PayPal',
-    date: 'Date not provided',
+    date: 'Date unavailable',
   },
   {
     title: 'Claude 101: AI Fundamentals & Prompt Engineering',
     issuer: 'Anthropic',
-    date: 'Date not provided',
+    date: 'Date unavailable',
   },
   {
     title: 'Oracle Course (6 Months)',
     issuer: 'Tyro HR India Pvt. Ltd. in association with ADHI College of Engineering & Technology',
-    date: 'Date not provided',
+    date: 'Date unavailable',
   },
   {
     title: 'AI-Enabled MATLAB Applications for Emerging Research & Startup Ventures',
     issuer: 'ADHI College of Engineering & Technology / Inspire Innov Tech',
-    date: 'Date not provided',
+    date: 'Date unavailable',
   },
   {
     title: 'Computing with Printed & Flexible Electronics: Ultra-thin, Sustainable Edge Devices',
     issuer: 'New Technology Technical & Software Training Institute',
-    date: 'Date not provided',
+    date: 'Date unavailable',
   },
   {
     title: 'IoT & Smart Home Applications with Cloud Computing',
     issuer: 'TechKnots Academy LLP',
-    date: 'Date not provided',
+    date: 'Date unavailable',
   },
   {
     title: 'Prompt Engineering Workshop',
     issuer: 'SRM Institute of Science & Technology',
-    date: 'Date not provided',
+    date: 'Date unavailable',
   },
   {
     title: 'EDC Workshop',
     issuer: 'Centre for Entrepreneurship Development, Anna University',
-    date: 'Date not provided',
+    date: 'Date unavailable',
   },
   {
     title: 'Industrial Visit',
     issuer: 'BSNL / Rajiv Gandhi Memorial Telecom Training Centre',
-    date: 'Date not provided',
+    date: 'Date unavailable',
   },
   {
     title: 'Industry Visit',
     issuer: 'Centre for Entrepreneurship Development, Anna University',
-    date: 'Date not provided',
+    date: 'Date unavailable',
   },
 ];

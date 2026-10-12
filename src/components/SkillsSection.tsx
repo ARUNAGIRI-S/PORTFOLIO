@@ -96,7 +96,7 @@ export const SkillsSection: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center space-x-2 bg-[#13151D] border border-[#A61C24]/40 px-3.5 py-1 rounded-full text-xs font-mono-tech text-[#A61C24]">
+          <div className="inline-flex items-center space-x-2 bg-[#13151D] border border-[#A61C24]/40 px-3.5 py-1 rounded-full text-xs font-mono-tech text-[#FF4545]">
             <Layers className="w-3.5 h-3.5 text-[#D7A84B]" />
             <span>TECHNICAL_CAPABILITIES // REPERTOIRE</span>
           </div>

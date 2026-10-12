@@ -43,12 +43,12 @@ export const AchievementsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center space-x-2 bg-[#13151D] border border-[#A61C24]/40 px-3.5 py-1 rounded-full text-xs font-mono-tech text-[#A61C24]">
+          <div className="inline-flex items-center space-x-2 bg-[#13151D] border border-[#A61C24]/40 px-3.5 py-1 rounded-full text-xs font-mono-tech text-[#FF4545]">
             <Trophy className="w-3.5 h-3.5 text-[#D7A84B]" />
             <span>HONORS // COMPETITION_AWARDS</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold font-tech text-[#F2F0EA]">
-            Key <span className="text-[#A61C24]">Achievements</span>
+            Key <span className="text-[#FF4545]">Achievements</span>
           </h2>
           <p className="text-sm sm:text-base text-[#9BA1B0] font-sans">
             Competitive honors, hackathon selections, awards, and technical prototype exhibitions.

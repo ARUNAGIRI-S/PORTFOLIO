@@ -95,12 +95,10 @@ export const HeroSection: React.FC = () => {
 
               <a 
                 href="mailto:arunofficial311@gmail.com?subject=Resume%20Request%20-%20Arunagiri%20S"
-                target="_blank"
-                rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 bg-[#13151D] hover:bg-[#1A1D29] text-[#D7A84B] font-tech font-semibold uppercase tracking-wider px-5 py-3 rounded border border-[#D7A84B]/40 shadow-[0_0_15px_rgba(215,168,75,0.15)] hover:border-[#D7A84B] transition-all text-xs sm:text-sm"
               >
                 <FileText className="w-4 h-4 text-[#F5C542]" />
-                <span>Download Resume</span>
+                <span>Request Resume</span>
               </a>
 
               <a 

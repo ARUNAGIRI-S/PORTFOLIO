@@ -57,7 +57,7 @@ export const EducationSection: React.FC = () => {
               <span>DURATION: <strong className="text-[#F2F0EA]">2024–2028 (Expected)</strong></span>
             </div>
             <div className="flex items-center space-x-2">
-              <MapPin className="w-4 h-4 text-[#A61C24]" />
+              <MapPin className="w-4 h-4 text-[#FF4545]" />
               <span>LOCATION: <strong className="text-[#F2F0EA]">Kanchipuram, Tamil Nadu</strong></span>
             </div>
             <div className="flex items-center space-x-2">

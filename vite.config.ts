@@ -10,7 +10,10 @@ function apiDevPlugin(): Plugin {
       server.middlewares.use(async (req, res, next) => {
         if (req.url && req.url.startsWith('/api/')) {
           const urlPath = req.url.split('?')[0];
-          const routeName = urlPath.replace('/api/', '');
+          let routeName = urlPath.replace('/api/', '');
+          if (routeName.endsWith('.ts') || routeName.startsWith('_')) {
+            return next();
+          }
           const handlerFile = path.resolve(process.cwd(), `api/${routeName}.ts`);
 
           try {

@@ -47,7 +47,24 @@ export default async function handler(req: any, res: any) {
       id: result.insertedId,
     });
   } catch (error: any) {
-    console.error('Error storing contact message in MongoDB:', error);
-    return res.status(500).json({ error: 'Failed to process contact message' });
+    const isConnError = error?.name === 'MongoServerSelectionError' || 
+                        error?.name === 'MongoNetworkError' ||
+                        error?.message?.includes('MONGODB_URI') ||
+                        error?.message?.includes('timed out');
+    
+    // Server-side diagnostic log without logging sensitive connection strings
+    console.error(`Contact API database error [${error?.name || 'Error'}]:`, error?.message || 'Unknown error');
+    
+    if (isConnError) {
+      return res.status(503).json({ 
+        success: false,
+        error: 'DATABASE_UNAVAILABLE // Database connection is temporarily unavailable. Please try again later or reach out via direct email.' 
+      });
+    }
+
+    return res.status(500).json({ 
+      success: false,
+      error: 'TRANSMISSION_FAILED // Failed to process contact message. Please try again.' 
+    });
   }
 }

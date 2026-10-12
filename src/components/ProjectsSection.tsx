@@ -32,21 +32,7 @@ export const ProjectsSection: React.FC = () => {
     setActiveModal({ isOpen: true, title, type });
   };
 
-  const handleLiveClick = (project: ProjectItem) => {
-    if (project.liveDemo) {
-      window.open(project.liveDemo, '_blank', 'noopener,noreferrer');
-    } else {
-      openPlaceholder(project.title, 'live');
-    }
-  };
 
-  const handleRepoClick = (project: ProjectItem) => {
-    if (project.github) {
-      window.open(project.github, '_blank', 'noopener,noreferrer');
-    } else {
-      openPlaceholder(project.title, 'repo');
-    }
-  };
 
   const fetchProjects = async () => {
     setIsLoading(true);
@@ -84,7 +70,7 @@ export const ProjectsSection: React.FC = () => {
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-bold font-tech text-[#F2F0EA]">
-            Project <span className="text-[#A61C24]">Highlights</span>
+            Project <span className="text-[#FF4545]">Highlights</span>
           </h2>
 
           <p className="text-sm sm:text-base text-[#9BA1B0] font-sans">
@@ -192,21 +178,45 @@ export const ProjectsSection: React.FC = () => {
                   </div>
 
                   <div className="flex items-center justify-between pt-2">
-                    <button
-                      onClick={() => handleLiveClick(project)}
-                      className="inline-flex items-center space-x-1.5 text-xs font-tech font-bold text-[#F2F0EA] hover:text-[#61DDF2] px-3.5 py-2 rounded bg-[#0C0D10] border border-white/15 hover:border-[#61DDF2] transition-colors focus:outline-none focus:ring-1 focus:ring-[#61DDF2]"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5 text-[#61DDF2]" />
-                      <span>{project.liveDemo ? 'Launch Web App' : 'Live Demo Link'}</span>
-                    </button>
+                    {project.liveDemo ? (
+                      <a
+                        href={project.liveDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1.5 text-xs font-tech font-bold text-[#F2F0EA] hover:text-[#61DDF2] px-3.5 py-2 rounded bg-[#0C0D10] border border-white/15 hover:border-[#61DDF2] transition-colors focus:outline-none focus:ring-1 focus:ring-[#61DDF2]"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5 text-[#61DDF2]" />
+                        <span>{project.liveLabel || 'Launch Web App'}</span>
+                      </a>
+                    ) : (
+                      <button
+                        onClick={() => openPlaceholder(project.title, 'live')}
+                        className="inline-flex items-center space-x-1.5 text-xs font-tech font-bold text-[#F2F0EA] hover:text-[#61DDF2] px-3.5 py-2 rounded bg-[#0C0D10] border border-white/15 hover:border-[#61DDF2] transition-colors focus:outline-none focus:ring-1 focus:ring-[#61DDF2]"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5 text-[#61DDF2]" />
+                        <span>{project.liveLabel || 'View System Specs'}</span>
+                      </button>
+                    )}
 
-                    <button
-                      onClick={() => handleRepoClick(project)}
-                      className="inline-flex items-center space-x-1.5 text-xs font-tech font-bold text-[#F2F0EA] hover:text-[#D7A84B] px-3.5 py-2 rounded bg-[#0C0D10] border border-white/15 hover:border-[#D7A84B] transition-colors focus:outline-none focus:ring-1 focus:ring-[#D7A84B]"
-                    >
-                      <GithubIcon className="w-3.5 h-3.5 text-[#D7A84B]" />
-                      <span>{project.github ? 'View Code Repository' : 'Repository Link'}</span>
-                    </button>
+                    {project.github ? (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1.5 text-xs font-tech font-bold text-[#F2F0EA] hover:text-[#D7A84B] px-3.5 py-2 rounded bg-[#0C0D10] border border-white/15 hover:border-[#D7A84B] transition-colors focus:outline-none focus:ring-1 focus:ring-[#D7A84B]"
+                      >
+                        <GithubIcon className="w-3.5 h-3.5 text-[#D7A84B]" />
+                        <span>{project.githubLabel || 'View Code Repository'}</span>
+                      </a>
+                    ) : (
+                      <button
+                        onClick={() => openPlaceholder(project.title, 'repo')}
+                        className="inline-flex items-center space-x-1.5 text-xs font-tech font-bold text-[#F2F0EA] hover:text-[#D7A84B] px-3.5 py-2 rounded bg-[#0C0D10] border border-white/15 hover:border-[#D7A84B] transition-colors focus:outline-none focus:ring-1 focus:ring-[#D7A84B]"
+                      >
+                        <GithubIcon className="w-3.5 h-3.5 text-[#D7A84B]" />
+                        <span>{project.githubLabel || 'Repository Link'}</span>
+                      </button>
+                    )}
                   </div>
 
                 </div>

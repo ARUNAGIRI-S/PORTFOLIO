@@ -39,8 +39,8 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'bg-[#0C0D10]/95 backdrop-blur-md border-b border-[#D7A84B]/30 shadow-[0_4px_25px_rgba(0,0,0,0.8)] py-3' 
+      scrolled || mobileMenuOpen
+        ? 'bg-[#0C0D10] border-b border-[#D7A84B]/30 shadow-[0_4px_25px_rgba(0,0,0,0.8)] py-3' 
         : 'bg-gradient-to-b from-[#0C0D10] to-transparent py-5'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -104,26 +104,33 @@ export const Navbar: React.FC = () => {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0C0D10]/98 border-b border-[#A61C24]/40 px-4 pt-3 pb-6 space-y-3 font-tech">
-          <div className="flex items-center justify-between text-[11px] font-mono-tech text-[#61DDF2] pb-2 border-b border-white/10">
-            <span>INTERFACE_MODE: HUD_MOBILE</span>
-            <span className="text-[#D7A84B]">V4.2</span>
+        <>
+          <div 
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm -z-10 md:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <div className="md:hidden bg-[#0C0D10] border-b border-[#D7A84B]/40 shadow-[0_20px_50px_rgba(0,0,0,0.95)] px-4 pt-3 pb-6 space-y-3 font-tech relative z-50">
+            <div className="flex items-center justify-between text-[11px] font-mono-tech text-[#61DDF2] pb-2 border-b border-white/10">
+              <span>INTERFACE_MODE: HUD_MOBILE</span>
+              <span className="text-[#D7A84B]">V4.2</span>
+            </div>
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-2.5 text-sm font-semibold tracking-widest uppercase text-[#F2F0EA] hover:text-[#D7A84B] hover:bg-[#A61C24]/20 border-l-2 border-[#FF4545] transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
+            <div className="pt-2 flex items-center justify-between text-xs font-mono-tech text-[#9BA1B0] px-2">
+              <span>STATUS: READY</span>
+              <span className="text-[#61DDF2]">8778165582</span>
+            </div>
           </div>
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-4 py-2.5 text-sm font-semibold tracking-widest uppercase text-[#F2F0EA] hover:text-[#D7A84B] hover:bg-[#A61C24]/20 border-l-2 border-[#A61C24] transition-colors"
-            >
-              {link.name}
-            </a>
-          ))}
-          <div className="pt-2 flex items-center justify-between text-xs font-mono-tech text-[#9BA1B0] px-2">
-            <span>STATUS: READY</span>
-            <span className="text-[#61DDF2]">8778165582</span>
-          </div>
-        </div>
+        </>
       )}
     </header>
   );

@@ -2,8 +2,12 @@ import { MongoClient, Db } from 'mongodb';
 import * as dotenv from 'dotenv';
 import path from 'path';
 
-dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
-dotenv.config();
+try {
+  dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
+  dotenv.config();
+} catch {
+  // Dotenv loading is optional in cloud serverless runtimes where process.env is pre-injected
+}
 
 // Safely configure DNS servers for local Windows development without breaking Vercel Linux Lambdas
 if (process.env.NODE_ENV !== 'production' && process.platform === 'win32') {
@@ -36,14 +40,21 @@ export async function connectToDatabase(): Promise<MongoConnection> {
     return cachedConnection;
   }
 
-  const client = new MongoClient(uri, {
-    connectTimeoutMS: 10000,
-    serverSelectionTimeoutMS: 10000,
-  });
+  try {
+    const client = new MongoClient(uri, {
+      connectTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 5000,
+      maxPoolSize: 10,
+    });
 
-  await client.connect();
-  const db = client.db('portfolio');
+    await client.connect();
+    const dbName = process.env.DB_NAME || 'portfolio';
+    const db = client.db(dbName);
 
-  cachedConnection = { client, db };
-  return cachedConnection;
+    cachedConnection = { client, db };
+    return cachedConnection;
+  } catch (error) {
+    cachedConnection = null;
+    throw error;
+  }
 }

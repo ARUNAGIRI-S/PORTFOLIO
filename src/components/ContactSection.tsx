@@ -9,14 +9,39 @@ export const ContactSection: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formStatus, setFormStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
-  const copyToClipboard = (text: string, fieldName: string) => {
-    navigator.clipboard.writeText(text);
+  const copyToClipboard = async (text: string, fieldName: string) => {
+    let copied = false;
+    if (navigator?.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(text);
+        copied = true;
+      } catch (err) {
+        console.warn('navigator.clipboard write failed, attempting fallback', err);
+      }
+    }
+    if (!copied) {
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      } catch (err) {
+        console.warn('Clipboard fallback copy failed:', err);
+      }
+    }
     setCopiedField(fieldName);
-    setTimeout(() => setCopiedField(null), 2500);
+    setTimeout(() => setCopiedField(null), 2000);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
     setFormStatus(null);
     setIsSubmitting(true);
 
@@ -29,26 +54,48 @@ export const ContactSection: React.FC = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      let data: any = null;
+      const contentType = response.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        try {
+          data = await response.json();
+        } catch {
+          data = null;
+        }
+      } else {
+        try {
+          await response.text();
+        } catch {
+          // ignore plain text read error
+        }
+      }
 
-      if (response.ok && data.success) {
+      if (response.ok && data?.success) {
         setFormStatus({
           type: 'success',
-          message: 'TRANSMISSION_SENT // Message delivered and stored in MongoDB database.',
+          message: data.message || 'TRANSMISSION_SENT // Message delivered and stored in MongoDB database.',
         });
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
+        const errorMsg = data?.error || (response.status === 503 
+          ? 'DATABASE_UNAVAILABLE // Service temporarily offline. Please reach out via direct email.' 
+          : response.status === 500
+          ? 'TRANSMISSION_FAILED // Server returned an error. Please try again or email directly.'
+          : 'TRANSMISSION_FAILED // Could not deliver contact message.');
+
         setFormStatus({
           type: 'error',
-          message: data.error || 'TRANSMISSION_FAILED // Could not deliver contact message.',
+          message: errorMsg,
         });
+        // Preserves formData so user input is not lost
       }
     } catch (err) {
       console.error('Network error during contact submission:', err);
       setFormStatus({
         type: 'error',
-        message: 'TRANSMISSION_ERROR // Network or server error occurred. Please try again.',
+        message: 'TRANSMISSION_ERROR // Network or connection error occurred. Please try again.',
       });
+      // Preserves formData
     } finally {
       setIsSubmitting(false);
     }
@@ -108,11 +155,18 @@ export const ContactSection: React.FC = () => {
 
                 <button
                   onClick={() => copyToClipboard('arunofficial311@gmail.com', 'email')}
-                  className="p-2 rounded bg-[#13151D] text-[#9BA1B0] hover:text-[#61DDF2] border border-white/10 hover:border-[#61DDF2] transition-colors focus:outline-none shrink-0"
+                  className="px-2.5 py-1.5 rounded bg-[#13151D] text-[#9BA1B0] hover:text-[#61DDF2] border border-white/10 hover:border-[#61DDF2] transition-colors focus:outline-none shrink-0 flex items-center space-x-1.5"
                   title="Copy email address"
                   aria-label="Copy email address"
                 >
-                  {copiedField === 'email' ? <Check className="w-4 h-4 text-[#61DDF2]" /> : <Copy className="w-4 h-4" />}
+                  {copiedField === 'email' ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-[#61DDF2]" />
+                      <span className="text-[10px] font-mono-tech text-[#61DDF2] font-bold">COPIED!</span>
+                    </>
+                  ) : (
+                    <Copy className="w-4 h-4" />
+                  )}
                 </button>
               </div>
 
@@ -135,11 +189,18 @@ export const ContactSection: React.FC = () => {
 
                 <button
                   onClick={() => copyToClipboard('8778165582', 'phone')}
-                  className="p-2 rounded bg-[#13151D] text-[#9BA1B0] hover:text-[#D7A84B] border border-white/10 hover:border-[#D7A84B] transition-colors focus:outline-none shrink-0"
+                  className="px-2.5 py-1.5 rounded bg-[#13151D] text-[#9BA1B0] hover:text-[#D7A84B] border border-white/10 hover:border-[#D7A84B] transition-colors focus:outline-none shrink-0 flex items-center space-x-1.5"
                   title="Copy phone number"
                   aria-label="Copy phone number"
                 >
-                  {copiedField === 'phone' ? <Check className="w-4 h-4 text-[#D7A84B]" /> : <Copy className="w-4 h-4" />}
+                  {copiedField === 'phone' ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-[#D7A84B]" />
+                      <span className="text-[10px] font-mono-tech text-[#D7A84B] font-bold">COPIED!</span>
+                    </>
+                  ) : (
+                    <Copy className="w-4 h-4" />
+                  )}
                 </button>
               </div>
 

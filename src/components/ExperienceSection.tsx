@@ -40,12 +40,12 @@ export const ExperienceSection: React.FC = () => {
         
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <div className="inline-flex items-center space-x-2 bg-[#13151D] border border-[#D7A84B]/40 px-3.5 py-1 rounded-full text-xs font-mono-tech text-[#D7A84B]">
-            <Briefcase className="w-3.5 h-3.5 text-[#A61C24]" />
+            <Briefcase className="w-3.5 h-3.5 text-[#FF4545]" />
             <span>COMMISSION_LOG // TIMELINE</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-bold font-tech text-[#F2F0EA]">
-            Experience &amp; <span className="text-[#A61C24]">Leadership</span>
+            Experience &amp; <span className="text-[#FF4545]">Leadership</span>
           </h2>
 
           <p className="text-sm sm:text-base text-[#9BA1B0] font-sans">
@@ -85,7 +85,7 @@ export const ExperienceSection: React.FC = () => {
                 transition={{ duration: 0.6, delay: index * 0.12 }}
                 className="relative bg-[#13151D] border border-[#D7A84B]/30 rounded-xl p-6 sm:p-8 hud-corner-box shadow-xl hover:border-[#D7A84B] transition-colors"
               >
-                <div className="absolute -left-[31px] sm:-left-[47px] top-6 w-5 h-5 rounded-full bg-[#0C0D10] border-2 border-[#A61C24] flex items-center justify-center shadow-[0_0_10px_rgba(166,28,36,0.8)]">
+                <div className="absolute -left-[31px] sm:-left-[47px] top-6 w-5 h-5 rounded-full bg-[#0C0D10] border-2 border-[#E62429] flex items-center justify-center shadow-[0_0_10px_rgba(230,36,41,0.8)]">
                   <div className="w-2 h-2 rounded-full bg-[#61DDF2] animate-pulse" />
                 </div>
 
@@ -106,7 +106,7 @@ export const ExperienceSection: React.FC = () => {
 
                 <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm font-mono-tech text-[#D7A84B] mb-5">
                   <span className="flex items-center space-x-1">
-                    <Building2 className="w-4 h-4 text-[#A61C24]" />
+                    <Building2 className="w-4 h-4 text-[#FF4545]" />
                     <span>{exp.organization}</span>
                   </span>
                   <span>•</span>
