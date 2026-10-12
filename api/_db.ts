@@ -1,20 +1,20 @@
 import { MongoClient, Db } from 'mongodb';
-import * as dotenv from 'dotenv';
-import path from 'path';
+import dns from 'node:dns';
 
-try {
-  dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
-  dotenv.config();
-} catch {
-  // Dotenv loading is optional in cloud serverless runtimes where process.env is pre-injected
+// In local development, safely load dotenv if present
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    const dotenv = await import('dotenv');
+    dotenv.config?.();
+  } catch {
+    // Pre-injected by cloud platform in production
+  }
 }
 
 // Safely configure DNS servers for local Windows development without breaking Vercel Linux Lambdas
-if (process.env.NODE_ENV !== 'production' && process.platform === 'win32') {
+if (process.platform === 'win32' && process.env.NODE_ENV !== 'production') {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const dns = require('dns');
-    if (dns && typeof dns.setServers === 'function') {
+    if (typeof dns.setServers === 'function') {
       dns.setServers(['8.8.8.8', '1.1.1.1', '8.8.4.4']);
     }
   } catch {
