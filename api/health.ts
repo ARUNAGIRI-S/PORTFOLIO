@@ -27,6 +27,12 @@ export default async function handler(req: any, res: any) {
     try {
       const dbModule = await import('./_db.js');
       diag.dbImport = 'SUCCESS (_db.js)';
+      try {
+        await dbModule.connectToDatabase();
+        diag.dbConnection = 'CONNECTED';
+      } catch (dbErr: any) {
+        diag.dbConnection = `FAILED: ${dbErr?.name || 'Error'} - ${dbErr?.message || 'unknown'}`;
+      }
     } catch (errJs: any) {
       diag.dbImportJsError = errJs?.message || String(errJs);
       try {
