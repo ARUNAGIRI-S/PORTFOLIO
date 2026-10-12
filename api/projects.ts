@@ -1,5 +1,5 @@
-import { connectToDatabase } from './_db';
-import { INITIAL_PROJECTS } from './_data';
+import { connectToDatabase } from './_db.ts';
+import { INITIAL_PROJECTS } from './_data.ts';
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'GET') {
